@@ -23,3 +23,19 @@ test('Testando cadastro de três perguntas', () => {
   expect(perguntas[2].num_respostas).toBe(0);
   expect(perguntas[1].id_pergunta).toBe(perguntas[2].id_pergunta-1);
 });
+
+test('Testando cadastro de respostas', () => {
+  const texto = 'Qual eh a resposta para A Vida, O Universo e Tudo Mais?';
+  const resp0Texto = '42';
+  const resp1Texto = '"Forty-two," said Deep Thought, with infinite majesty and calm.';
+  var id_pergunta = modelo.cadastrar_pergunta(texto);
+  modelo.cadastrar_resposta(id_pergunta, resp0Texto);
+  modelo.cadastrar_resposta(id_pergunta, resp1Texto);
+  var perg = modelo.get_pergunta(id_pergunta);
+  expect(perg.texto).toBe(texto);
+  var resps = modelo.get_respostas(id_pergunta);
+  expect(modelo.get_num_respostas(id_pergunta)).toBe(2);
+  expect(resps.length).toBe(2);
+  expect(resps[0].texto).toBe(resp0Texto);
+  expect(resps[1].texto).toBe(resp1Texto);
+});
